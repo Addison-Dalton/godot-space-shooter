@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3qwif2erpu0s"]
+
+[ext_resource type="Texture2D" uid="uid://7g07g7dyxmee" path="res://graphics/objects/meteors/meteorBrown_big1.png" id="1_niu4o"]
+
+[node name="MeteorBig1" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 15
+mass = 20000.0
+gravity_scale = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(22, -40, 49, -2, 34, 33, 11, 29, -22, 41, -50, 10, -33, -41)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_niu4o")

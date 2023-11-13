@@ -1,0 +1,221 @@
+[gd_scene load_steps=14 format=3 uid="uid://b3bgeh56kahe5"]
+
+[ext_resource type="Script" path="res://scenes/ship/ship.gd" id="1_kak37"]
+[ext_resource type="Texture2D" uid="uid://gvgxjmgu7rgn" path="res://graphics/ship/ship-0.png" id="2_cjama"]
+[ext_resource type="Texture2D" uid="uid://bvq5ri6poys7t" path="res://graphics/particles/white.png" id="2_fmdh0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcw88"]
+
+[sub_resource type="Gradient" id="Gradient_lu103"]
+colors = PackedColorArray(0.423529, 0.423529, 0.423529, 1, 1, 1, 1, 0.129412)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_u12kh"]
+gradient = SubResource("Gradient_lu103")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ftb32"]
+emission_shape = 1
+emission_sphere_radius = 17.07
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 9.84
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 120.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.3
+scale_max = 0.8
+color_ramp = SubResource("GradientTexture1D_u12kh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5rbpp"]
+emission_shape = 1
+emission_sphere_radius = 6.35
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 3.14
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+scale_max = 0.4
+color_ramp = SubResource("GradientTexture1D_u12kh")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fl3a3"]
+load_path = "res://.godot/imported/white.png-ed467e6e1b5de1de4921fdf7df21e1fa.ctex"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v7adj"]
+emission_shape = 1
+emission_sphere_radius = 6.35
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 3.14
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+scale_max = 0.4
+color_ramp = SubResource("GradientTexture1D_u12kh")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1ohm8"]
+load_path = "res://.godot/imported/white.png-ed467e6e1b5de1de4921fdf7df21e1fa.ctex"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jfwsf"]
+emission_shape = 1
+emission_sphere_radius = 6.35
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 3.14
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+scale_max = 0.4
+color_ramp = SubResource("GradientTexture1D_u12kh")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nju04"]
+load_path = "res://.godot/imported/white.png-ed467e6e1b5de1de4921fdf7df21e1fa.ctex"
+
+[node name="Ship" type="CharacterBody2D"]
+collision_mask = 15
+script = ExtResource("1_kak37")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vcw88")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_cjama")
+
+[node name="BallasticProjectileTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="BallasticStartPositions" type="Node2D" parent="."]
+
+[node name="Marker2DLeft" type="Marker2D" parent="BallasticStartPositions"]
+position = Vector2(-34, -14)
+
+[node name="Marker2DRight" type="Marker2D" parent="BallasticStartPositions"]
+position = Vector2(34, -14)
+
+[node name="Engines" type="Node2D" parent="."]
+
+[node name="MainEngineSmokeParticles" type="GPUParticles2D" parent="Engines"]
+position = Vector2(0, 34)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_ftb32")
+texture = ExtResource("2_fmdh0")
+lifetime = 0.5
+one_shot = true
+
+[node name="RetrogradeEngineParticles" type="Node2D" parent="Engines"]
+
+[node name="RetrogradeEngineSmokeParticlesR" type="GPUParticles2D" parent="Engines/RetrogradeEngineParticles"]
+position = Vector2(8, -25)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_5rbpp")
+texture = SubResource("CompressedTexture2D_fl3a3")
+lifetime = 0.5
+one_shot = true
+
+[node name="RetrogradeEngineSmokeParticlesL" type="GPUParticles2D" parent="Engines/RetrogradeEngineParticles"]
+position = Vector2(-8, -25)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_5rbpp")
+texture = SubResource("CompressedTexture2D_fl3a3")
+lifetime = 0.5
+one_shot = true
+
+[node name="StrafeEngineParticlesL" type="Node2D" parent="Engines"]
+
+[node name="StrafeEngineSmokeParticlesL" type="GPUParticles2D" parent="Engines/StrafeEngineParticlesL"]
+position = Vector2(-40, -3)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_v7adj")
+texture = SubResource("CompressedTexture2D_1ohm8")
+lifetime = 0.5
+one_shot = true
+
+[node name="StrafeEngineSmokeParticlesL2" type="GPUParticles2D" parent="Engines/StrafeEngineParticlesL"]
+position = Vector2(-40, 15)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_v7adj")
+texture = SubResource("CompressedTexture2D_1ohm8")
+lifetime = 0.5
+one_shot = true
+
+[node name="StrafeEngineParticlesR" type="Node2D" parent="Engines"]
+
+[node name="StrafeEngineSmokeParticlesR" type="GPUParticles2D" parent="Engines/StrafeEngineParticlesR"]
+position = Vector2(40, -3)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_v7adj")
+texture = SubResource("CompressedTexture2D_1ohm8")
+lifetime = 0.5
+one_shot = true
+
+[node name="StrafeEngineSmokeParticlesR2" type="GPUParticles2D" parent="Engines/StrafeEngineParticlesR"]
+position = Vector2(40, 16)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_v7adj")
+texture = SubResource("CompressedTexture2D_1ohm8")
+lifetime = 0.5
+one_shot = true
+
+[node name="YawEngineParticlesRight" type="Node2D" parent="Engines"]
+
+[node name="YawEngineSmokeParticlesR2" type="GPUParticles2D" parent="Engines/YawEngineParticlesRight"]
+position = Vector2(11, 31)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_jfwsf")
+texture = SubResource("CompressedTexture2D_nju04")
+lifetime = 0.5
+one_shot = true
+
+[node name="YawEngineSmokeParticlesRL" type="GPUParticles2D" parent="Engines/YawEngineParticlesRight"]
+position = Vector2(-12, -18)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_jfwsf")
+texture = SubResource("CompressedTexture2D_nju04")
+lifetime = 0.5
+one_shot = true
+
+[node name="YawEngineParticlesLeft" type="Node2D" parent="Engines"]
+
+[node name="YawEngineSmokeParticlesRL2" type="GPUParticles2D" parent="Engines/YawEngineParticlesLeft"]
+position = Vector2(-11, 31)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_jfwsf")
+texture = SubResource("CompressedTexture2D_nju04")
+lifetime = 0.5
+one_shot = true
+
+[node name="YawEngineSmokeParticlesR" type="GPUParticles2D" parent="Engines/YawEngineParticlesLeft"]
+position = Vector2(11, -18)
+rotation = -3.14159
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_jfwsf")
+texture = SubResource("CompressedTexture2D_nju04")
+lifetime = 0.5
+one_shot = true
+
+[connection signal="timeout" from="BallasticProjectileTimer" to="." method="on_ballastic_timer_timeout"]

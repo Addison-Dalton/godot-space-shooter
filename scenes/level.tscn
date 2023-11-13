@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://fux5g1go4g6"]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_3ew7k"]
+[ext_resource type="PackedScene" uid="uid://b3bgeh56kahe5" path="res://scenes/ship/ship.tscn" id="1_356to"]
+[ext_resource type="Texture2D" uid="uid://docddal5ryrbk" path="res://graphics/backgrounds/Blue_Nebula_07-1024x1024.png" id="2_jfav4"]
+[ext_resource type="PackedScene" uid="uid://d3qwif2erpu0s" path="res://scenes/objects/meteors/meteor_big_1.tscn" id="4_8jlll"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_3ew7k")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+texture_repeat = 2
+texture = ExtResource("2_jfav4")
+region_enabled = true
+region_rect = Rect2(-1407.77, -822.753, 100000, 100000)
+
+[node name="Ship" parent="." instance=ExtResource("1_356to")]
+position = Vector2(565, 293)
+
+[node name="Camera2D" type="Camera2D" parent="Ship"]
+position = Vector2(0, -1)
+zoom = Vector2(0.6, 0.6)
+position_smoothing_enabled = true
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Meteors" type="Node2D" parent="."]
+
+[node name="MeteorBig1" parent="Meteors" instance=ExtResource("4_8jlll")]
+position = Vector2(734, -78)
+
+[connection signal="on_ballastic_fired" from="Ship" to="." method="_on_ship_ballastic_fired"]

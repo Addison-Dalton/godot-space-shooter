@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjfwkftjwywlj"]
+
+[ext_resource type="Script" path="res://scenes/projectiles/ballastic_projectile.gd" id="1_3jinu"]
+[ext_resource type="Texture2D" uid="uid://brlox11a32ym3" path="res://graphics/projectiles/ballastic-projectile.png" id="2_7r21k"]
+[ext_resource type="Texture2D" uid="uid://bvq5ri6poys7t" path="res://graphics/particles/white.png" id="3_qrjba"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q2hts"]
+size = Vector2(2, 8)
+
+[sub_resource type="Gradient" id="Gradient_i1cxs"]
+offsets = PackedFloat32Array(0, 0.545213, 0.992021)
+colors = PackedColorArray(1, 1, 1, 1, 0.6, 0.6, 0.6, 0.768627, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vtn5q"]
+gradient = SubResource("Gradient_i1cxs")
+
+[sub_resource type="Curve" id="Curve_m666l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kee35"]
+curve = SubResource("Curve_m666l")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fwkok"]
+emission_shape = 1
+emission_sphere_radius = 4.19
+particle_flag_disable_z = true
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+angular_velocity_max = 1.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_kee35")
+color = Color(0.803922, 0.803922, 0.803922, 1)
+color_ramp = SubResource("GradientTexture1D_vtn5q")
+
+[node name="BallasticProjectile" type="RigidBody2D"]
+rotation = 1.5708
+collision_layer = 8
+collision_mask = 15
+gravity_scale = 0.0
+script = ExtResource("1_3jinu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_q2hts")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("2_7r21k")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_fwkok")
+texture = ExtResource("3_qrjba")
+lifetime = 0.5
